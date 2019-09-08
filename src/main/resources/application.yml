@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: gateway-zuul
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          # zuul不用配置,默认从自动根据注册中心服务名称的小写自动转发
+          # spring-cloud-starter-gateway 这个傻逼抽风框架,要手动配置下面两个参数,不配置的话,连自己是怎么死的都不知道
+          # spring.cloud.gateway.discovery.locator.enabled=true
+          # spring.cloud.gateway.discovery.locator.lower-case-service-id=true
+          lower-case-service-id: true
+
+eureka:
+  instance:
+    # eureka客户端需要多长时间发送心跳给eureka服务器，表明他仍然或者，默认30秒
+    lease-renewal-interval-in-seconds: 3
+    # eureka服务器在接受到实力的最后一次发出的心跳后，需要等待多久才可以将此实力删除
+    lease-expiration-duration-in-seconds: 60
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8888
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+#logging:
+#  level:
+#    org.springframework.cloud.gateway: DEBUG
+#    org.springframework.http.server.reactive: DEBUG
+#    org.springframework.web.reactive: DEBUG
+#    reactor.ipc.netty: DEBUG
